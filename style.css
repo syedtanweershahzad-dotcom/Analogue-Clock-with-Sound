@@ -1,0 +1,207 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* یہ بیک گراؤنڈ ہر براؤزر پر 100٪ کام کرے گا اور دیوار پر پڑنے والی لائٹ کا لک دے گا */
+  background: radial-gradient(circle at 50% 30%, #e2e8f0 0%, #cbd5e1 60%, #94a3b8 120%);
+  
+  position: relative;
+  font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+  overflow: hidden;
+}
+
+/* دیوار پر ایک خوبصورت شیڈو اوورلے (جو کمرے کے کونوں کا اندھیرا دکھاتا ہے) */
+body::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(circle at center, transparent 30%, rgba(15, 23, 42, 0.15) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.clock-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 45px;
+  position: relative;
+  z-index: 2; /* کلاک کو وال ایفیکٹ سے اوپر رکھنے کے لیے */
+}
+
+/* لکشری 3D کلاک باڈی جو دیوار پر ٹنگی محسوس ہو */
+.clock {
+  width: 390px;
+  height: 390px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ffffff 0%, #f1f5f9 100%);
+  position: relative;
+  
+  /* یہ ہیوی ملٹی لیئر شیڈو گھڑی کو دیوار سے باہر ابھارے گا */
+  box-shadow:
+    /* دیوار پر پڑنے والا بڑا، گہرا اور پھیلا ہوا سایہ */
+    0 40px 80px -15px rgba(15, 23, 42, 0.5),
+    0 25px 40px -10px rgba(15, 23, 42, 0.3),
+    /* فریم کی موٹائی اور میٹل لک */
+    0 0 0 1px rgba(0,0,0,0.2),
+    0 0 0 4px #cbd5e1,                     
+    0 0 0 14px #475569,                    
+    0 8px 25px rgba(0,0,0,0.4),           
+    /* ڈائل کے اندر کی گہرائی */
+    inset 0 15px 30px rgba(15, 23, 42, 0.15), 
+    inset 0 -15px 30px rgba(255, 255, 255, 0.9);
+  
+  overflow: hidden;
+}
+
+/* تھری ڈی کروڈ گلاس (Curved Glass Effect) */
+.clock::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: 
+    linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.05) 38%, rgba(255,255,255,0) 39%),
+    radial-gradient(circle at 50% 8%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 60%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.clock img {
+  position: absolute;
+  bottom: 85px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 45px;
+  z-index: 2;
+  opacity: 0.12;
+  pointer-events: none;
+  filter: grayscale(100%);
+}
+
+.numbers {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.numbers span {
+  position: absolute;
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f172a;
+  transform: translate(-50%, -50%);
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 1px 0px rgba(255,255,255,0.8);
+}
+
+.ticks {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+}
+
+.tick {
+  position: absolute;
+  top: 0; left: 50%;
+  width: 1.5px;
+  height: 10px;
+  background: rgba(100, 116, 139, 0.4);
+  transform-origin: bottom center;
+}
+
+.tick.major {
+  width: 3.5px;
+  height: 20px;
+  background: #0f172a;
+  border-radius: 0 0 2px 2px;
+}
+
+.hands {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+.hand {
+  position: absolute;
+  bottom: 50%;
+  transform-origin: bottom center;
+}
+
+/* سوئیاں اور ان کے ہائینگ شیڈوز */
+.hand-hour {
+  width: 9px;
+  height: 85px;
+  background: linear-gradient(90deg, #1e293b 0%, #0f172a 100%);
+  z-index: 3;
+  border-radius: 4px 4px 2px 2px;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
+}
+
+.hand-minute {
+  width: 6px;
+  height: 130px;
+  background: linear-gradient(90deg, #334155 0%, #1e293b 100%);
+  z-index: 4;
+  border-radius: 3px 3px 1px 1px;
+  filter: drop-shadow(0 4px 5px rgba(0,0,0,0.25));
+}
+
+.hand-second {
+  width: 2px;
+  height: 145px;
+  background: #e11d48;
+  z-index: 5;
+  border-radius: 1px 1px 0 0;
+  filter: drop-shadow(4px 6px 6px rgba(0, 0, 0, 0.25));
+}
+
+.center-cap {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #94a3b8 0%, #334155 40%, #0f172a 100%);
+  box-shadow: 
+    0 4px 8px rgba(0,0,0,0.4),
+    inset 0 1px 2px rgba(255,255,255,0.4);
+  z-index: 6;
+}
+
+/* پریمیم بٹن */
+.mute-btn {
+  padding: 12px 32px;
+  background: #0f172a;
+  color: #f8fafc;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.3);
+  transition: all 0.25s ease;
+}
+
+.mute-btn:hover {
+  background: #1e293b;
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px rgba(15, 23, 42, 0.4);
+}
+
+@media (max-width: 420px) {
+  .clock { width: 310px; height: 310px; }
+  .hand-hour { height: 68px; width: 7px; }
+  .hand-minute { height: 105px; width: 5px; }
+  .hand-second { height: 115px; width: 1.5px; }
+  .numbers span { font-size: 19px; }
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analogue Clock with Sound</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="clock-container">
+  <div class="clock">
+    <!-- Numbers container (populated by JS) -->
+    <div class="numbers" id="numbers"></div>
+
+    <!-- Ticks container -->
+    <div class="ticks" id="ticks"></div>
+
+    <!-- Hands -->
+    <div class="hands">
+      <div class="hand hand-hour" id="hourHand"></div>
+      <div class="hand hand-minute" id="minuteHand"></div>
+      <div class="hand hand-second" id="secondHand"></div>
+    </div>
+
+    <!-- Center cap -->
+    <div class="center-cap"></div>
+
+    <!-- Brand/Logo -->
+    <div class="clock-brand">
+      <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" />
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
